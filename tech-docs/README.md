@@ -28,3 +28,9 @@ Welcome to the **Sales CRM** Technical Documentation repository. This directory 
    - Server Actions validation patterns
    - Concurrency & real-time synchronization strategy
    - Role-Based Access Control (RBAC) plan
+
+5. [**05. E2E Workflow User Guide & Test Case**](./05-e2e-workflow-user-guide.md)
+   - Step-by-step walkthrough of the full sales business cycle (Tesla $500k scenario)
+   - Automated script execution guide (`scripts/test-e2e-workflow.ts`)
+   - Manual UI recreation across Companies, Deals, Contacts, Activities, and Forecast
+   - Prisma Studio database validation guide

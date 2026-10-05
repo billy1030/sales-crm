@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id              String   @id
+  name            String
+  tags            String[] // tags array (Enterprise, SMB, etc.)
+  owner           String
+  openDeals       Int      @default(0)
+  pipelineValue   Int      @default(0)
+  winProbability  Int      @default(50)
+  trend           Int[]    @default([])
+  lastInteraction String?  // JSON string or label
+  activityDays    Int      @default(1)
+  logo            String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Deal {
+  id                String   @id @default(cuid())
+  title             String
+  companyId         String
+  companyName       String
+  value             Int      @default(0)
+  stage             String   // Lead, Qualified, Demo / Meeting, Proposal, Negotiation, Won, Lost
+  owner             String
+  probability       Int      @default(50)
+  expectedCloseDate String?
+  priority          String   @default("Medium") // High, Medium, Low
+  tags              String[] @default([])
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Contact {
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  phone         String?
+  title         String?
+  companyId     String
+  companyName   String
+  owner         String
+  avatar        String?
+  lastContacted String?
+  status        String   @default("Active") // Active, Customer, Lead, Churned
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Activity {
+  id          String   @id @default(cuid())
+  type        String   // call, email, meeting, note, deal_won
+  title       String
+  description String
+  companyId   String
+  companyName String
+  userName    String
+  userAvatar  String?
+  timestamp   DateTime @default(now())
+  badge       String?
+  createdAt   DateTime @default(now())
+}
+
+model EmailSequence {
+  id            String   @id @default(cuid())
+  name          String
+  status        String   @default("Active") // Active, Draft, Paused
+  totalEnrolled Int      @default(0)
+  openRate      Int      @default(0)
+  replyRate     Int      @default(0)
+  stepsCount    Int      @default(3)
+  targetSegment String
+  creator       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model TeamMember {
+  id               String   @id @default(cuid())
+  name             String
+  role             String
+  team             String   // Strategic AEs, Mid Market, SDR Team
+  avatar           String
+  email            String   @unique
+  pipelineTarget   Int      @default(1000000)
+  pipelineAchieved Int      @default(0)
+  dealsCount       Int      @default(0)
+  winRate          Int      @default(50)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}

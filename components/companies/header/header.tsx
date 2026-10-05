@@ -67,7 +67,14 @@ export default function CompaniesHeader() {
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
+      <Tabs
+        value={activeTab}
+        onValueChange={(val) =>
+          setActiveTab(
+            val as "companies" | "deals" | "forecast" | "activities" | "contacts",
+          )
+        }
+      >
         <TabsList className="border-border border-b px-4">
           {TABS.map((tab) => (
             <TabsTrigger key={tab.value} value={tab.value}>

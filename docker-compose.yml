@@ -1,0 +1,16 @@
+services:
+  sales-crm-db:
+    image: postgres:16-alpine
+    container_name: sales-crm-postgres
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: sales_crm
+    volumes:
+      - sales_crm_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  sales_crm_postgres_data:
